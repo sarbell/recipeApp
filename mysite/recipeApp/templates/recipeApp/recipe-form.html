@@ -3,7 +3,7 @@
 <div class="container py-5">
     <div class="row">
         <div class="col">
-            <form method="POST">
+            <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="form-group">
                     <label for="name">Name of Recipe</label>

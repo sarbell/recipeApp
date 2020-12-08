@@ -1,10 +1,12 @@
 from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
 from .models import Recipe, Cookbook
 from .forms import RecipeForm, CookbookForm
 import pdfkit
 from django.contrib.auth.decorators import login_required
 from django.template import loader
+from django.contrib.auth.models import User
 import io
 
 
@@ -56,25 +58,45 @@ def cookbook(request, id):
 
 @login_required()
 def add_recipe(request):
-    form = RecipeForm(request.POST or None)
+    if request.user.is_authenticated:
+        user_name = get_object_or_404(User, username=request.user.username)
+    if request.method == 'POST':
+        name = request.POST.get('name', '')
+        description = request.POST.get('description', '')
+        image = request.FILES.get('image', '')
+        total_time = request.POST.get('total_time', '')
+        ingredients = request.POST.get('ingredients', '')
+        instructions = request.POST.get('instructions', '')
+        notes = request.POST.get('notes', '')
 
-    if form.is_valid():
-        form.save()
+        new_recipe = Recipe(user_name=user_name, name=name, description=description, image=image, total_time=total_time,
+                            ingredients=ingredients, instructions=instructions, notes=notes)
+        new_recipe.save()
         return redirect('recipeApp:library')
 
-    return render(request, 'recipeApp/recipe-form.html', {'form': form})
+    return render(request, 'recipeApp/recipe-form.html')
 
 
 @login_required()
 def update_recipe(request, id):
     recipe = Recipe.objects.get(id=id)
-    form = RecipeForm(request.POST or None, instance=recipe)
+    user_name = get_object_or_404(User, username=request.user.username)
 
-    if form.is_valid():
-        form.save()
+    if request.method == 'POST':
+        name = request.POST.get('name', 'hi')
+        description = request.POST.get('description', '')
+        image = request.FILES.get('image', '')
+        total_time = request.POST.get('total_time', '')
+        ingredients = request.POST.get('ingredients', '')
+        instructions = request.POST.get('instructions', '')
+        notes = request.POST.get('notes', '')
+
+        new_recipe = Recipe(user_name=user_name, name=name, description=description, image=image, total_time=total_time,
+                            ingredients=ingredients, instructions=instructions, notes=notes)
+        new_recipe.save()
         return redirect('recipeApp:library')
 
-    return render(request, 'recipeApp/recipe-form.html', {'form': form, 'recipe': recipe})
+    return render(request, 'recipeApp/recipe-form.html', { 'recipe':recipe})
 
 
 def recipe(request, id):
