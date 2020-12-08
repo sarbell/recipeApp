@@ -1,0 +1,17 @@
+{% extends 'recipeApp/base.html' %}
+{% block body %}
+<div class="container">
+    <div class="row py-5">
+        <div class="col-8">
+            <form action="POST">
+                <div class="form-group">
+                    <label for="image">Image </label>
+                    <input type="file" name="image" id="image">
+                </div>
+                <button type="submit" class="btn btn-outline-success">Add picture</button>
+            </form>
+    </div>
+</div>
+{% endblock %}
+</body>
+</html>

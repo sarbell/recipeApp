@@ -1,0 +1,30 @@
+{% extends 'recipeApp/base.html' %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Recipes! Login</title>
+</head>
+<body>
+{% block body %}
+<div class="container">
+    <div class="row py-5">
+        <div class="col-10 mx-auto">
+            <form method="POST">
+                {% csrf_token %}
+                {{ form }}
+                <button class=" my-4 btn btn-success btn-block" type="submit"> Login </button>
+            </form>
+            <hr>
+        </div>
+        <div class="col-8 mx-auto text-center">
+            <p>Don't already have an account? <a href="{% url 'register' %}">Register here</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+</body>
+</html>

@@ -1,0 +1,23 @@
+{% extends 'recipeApp/base.html' %}
+{% block body %}
+<div class="container">
+    <div class="row py-5">
+        <div class="col-4 text-left">
+            {% if user.profile.image.url %}
+                <img src="{{ user.profile.image.url }}" width="200px;" class="profilepic" alt="profile image">
+            {% else %}
+               <a href="{% url 'profile_update' %}" class="btn btn-primary">Add image</a>
+            {% endif %}
+        </div>
+        <div class="col-8 my-auto">
+           <h1>{{ user.first_name }} {{user.last_name}}</h1>
+            <hr>
+           <h6 class="text-muted"><strong>username:</strong> {{user.username}}</h6>
+           <h6 class="text-muted"><strong>email:</strong> {{user.email}}</h6>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+</body>
+</html>

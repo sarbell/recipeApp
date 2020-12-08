@@ -1,0 +1,52 @@
+{% extends 'recipeApp/base.html' %}
+{% block body %}
+<div class="container py-5">
+        <div class="row py-3">
+            <div class="col text-left">
+                    {% ifequal recipe.user_name|stringformat:"s" request.user.username|stringformat:"s"%}
+                <a class="text-secondary" href="{% url 'recipeApp:delete_recipe' recipe.id %}"><i class="text-right fas text-danger fa-minus-circle"></i>Delete</a>
+                <a class="text-secondary" href="{% url 'recipeApp:update_recipe' recipe.id %}"><i class="fas fa-pencil-alt text-right text-warning"></i></i>Edit</a>
+                {% endifequal %}
+                <a href="{%url 'recipeApp:recipe_pdf' recipe.id%}" class=" card-link text-secondary"><i class="fas mr-2 text-info fa-download"></i></i>Download to PDF</a>
+            </div>
+        </div>
+
+    <div class="row">
+        <div class="col-md-6 col-12">
+            <h2>{{recipe.name}}</h2>
+            <div class="row text-info">
+                <div class="col-6">
+                    <p><i class="mx-2 far fa-clock"></i>{{recipe.total_time}}</p>
+                </div>
+                 <div class="col-6">
+                    <p><i class="mx-2 far fa-user"></i>{{recipe.user_name}}</p>
+                </div>
+            </div>
+            <p>{{ recipe.description }}</p>
+        </div>
+        <div class="col-md-6 col-12 my-auto">
+            <img src="{{ recipe.image.url }}" alt="recipe item" width="100%" class="img-responsive">
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-12">
+            <h5 class="pb-1 pt-3 text-info">Ingredients</h5>
+            <p>{{ recipe.ingredients }}</p>
+        </div>
+         <div class="col-12">
+            <h5 class="pt-3 pb-1 text-info">Instructions</h5>
+            <p>{{ recipe.instructions }}</p>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+         <div class="col-12">
+            <h5 class="pt-3 pb-1 text-info">Notes</h5>
+            <p>{{ recipe.notes }}</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+</body>
+</html>

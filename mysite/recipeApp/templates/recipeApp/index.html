@@ -1,0 +1,65 @@
+{% extends 'recipeApp/base.html' %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Recipes!</title>
+</head>
+<body>
+{% block body %}
+{% if user.is_authenticated %}
+<div class="container">
+    <div class="row py-5">
+        <div class="col-12 text-center mx-auto my-auto">
+            <h1 class="display-3 text-success">Hi there, {{user.username}}</h1>
+            <h4 class="pb-5">Start by adding to you cookbook, or browsing recipes</h4>
+            <hr>
+        </div>
+        <div class="col-10 py-5 mx-auto">
+            <form action="" method="GET">
+                <div class="input-group mb-3">
+                  <input type="search" name="search_name" class="form-control" placeholder="Recipe name..." aria-label="Recipient's username" aria-describedby="basic-addon2">
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                  </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        {% for recipe in recipes%}
+        <div class=" col-md-4 col-sm-6 col-12">
+            <div class="card">
+                <a href="{% url 'recipeApp:recipe' recipe.id %}">
+                    <img class="card-img-top" src="{{recipe.image.url}}" alt="Card image cap">
+
+              <div class="card-body">
+                <h5 class="card-title text-dark">{{recipe.name}}</h5>
+                  </a>
+<!--                  <a href="" class=" card-link text-secondary"><i class="mb-4 mt-3 mr-2 fas text-success fa-plus-circle"></i>Add to Cookbook</a><br>-->
+                  <a href="{%url 'recipeApp:recipe_pdf' recipe.id%}" class=" card-link text-secondary"><i class="fas mr-2 text-info fa-download"></i></i>Download to PDF</a>
+
+              </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% else %}
+<div class="container-fluid">
+    <div class="row py-5">
+        <div class="col-12 text-center mx-auto my-auto">
+            <h1 class="display-1 text-success">Recipes!</h1>
+            <h2>The app that let's you share your recipes with friends.</h2>
+            <h6 class=" p-5 text-muted"><a class="text-success" href="{% url 'login' %}">Login</a> to view your cookbook</h6>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}
+</body>
+</html>
