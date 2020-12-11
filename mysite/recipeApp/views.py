@@ -83,16 +83,16 @@ def update_recipe(request, id):
     user_name = get_object_or_404(User, username=request.user.username)
 
     if request.method == 'POST':
-        name = request.POST.get('name', 'hi')
-        description = request.POST.get('description', '')
-        image = request.FILES.get('image', '')
-        total_time = request.POST.get('total_time', '')
-        ingredients = request.POST.get('ingredients', '')
-        instructions = request.POST.get('instructions', '')
-        notes = request.POST.get('notes', '')
+        recipe.name = request.POST.get('name', '')
+        recipe.description = request.POST.get('description', '')
+        recipe.image = request.FILES.get('image', '')
+        recipe.total_time = request.POST.get('total_time', '')
+        recipe.ingredients = request.POST.get('ingredients', '')
+        recipe.instructions = request.POST.get('instructions', '')
+        recipe.notes = request.POST.get('notes', '')
 
-        new_recipe = Recipe(user_name=user_name, name=name, description=description, image=image, total_time=total_time,
-                            ingredients=ingredients, instructions=instructions, notes=notes)
+        new_recipe = Recipe(user_name=user_name, name=recipe.name, description=recipe.description, image=recipe.image, total_time=recipe.total_time,
+                            ingredients=recipe.ingredients, instructions=recipe.instructions, notes=recipe.notes)
         new_recipe.save()
         return redirect('recipeApp:library')
 
