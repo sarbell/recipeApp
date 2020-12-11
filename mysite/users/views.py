@@ -3,6 +3,7 @@ from django.contrib import messages
 from .forms import RegistrationForm, UpdateProfile
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.shortcuts import get_object_or_404
 from .models import Profile
 
 
@@ -29,10 +30,13 @@ def profile_page(request):
 
 @login_required()
 def profile_update(request):
-    form = UpdateProfile(request.POST or None)
+    user = get_object_or_404(User, id=request.user.id)
 
-    if form.is_valid():
-        form.save()
-        return redirect('recipeApp:index')
+    if request.method== 'POST':
+        image = request.FILES.got('image', )
 
-    return render(request, 'users/profile_update.html', {'form': form})
+        updated_profile = Profile(user=user, image=image)
+        updated_profile.save()
+        return redirect('recipeApp:profile_page')
+
+    return render(request, 'users/profile_update.html', {'user':user})

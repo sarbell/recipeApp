@@ -30,13 +30,22 @@
     </div>
     <hr>
     <div class="row">
-        <div class="col-12">
+        <div class="col-4">
             <h5 class="pb-1 pt-3 text-info">Ingredients</h5>
-            <p>{{ recipe.ingredients }}</p>
-        </div>
-         <div class="col-12">
+
+        <ul>
+            {% for item in split_list %}
+             <li>{{item}}</li>
+            {%endfor%}
+        </ul>
+            </div>
+         <div class="col-8">
             <h5 class="pt-3 pb-1 text-info">Instructions</h5>
-            <p>{{ recipe.instructions }}</p>
+          <ol>
+                {% for step in steps %}
+                 <li>{{step}}</li>
+                {%endfor%}
+            </ol>
         </div>
     </div>
     <hr>

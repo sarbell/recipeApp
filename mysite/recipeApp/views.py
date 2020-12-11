@@ -101,13 +101,22 @@ def update_recipe(request, id):
 
 def recipe(request, id):
     recipe = Recipe.objects.get(id=id)
-    return render(request, 'recipeApp/recipe.html', {'recipe': recipe})
+    list = recipe.ingredients
+    split_list = list.splitlines()
+    instructions = recipe.instructions
+    steps = instructions.splitlines()
+
+    return render(request, 'recipeApp/recipe.html', {'recipe': recipe, 'split_list': split_list, 'steps': steps})
 
 
 def recipe_pdf(request, id):
     recipe = Recipe.objects.get(pk=id)
+    list = recipe.ingredients
+    split_list = list.splitlines()
+    instructions = recipe.instructions
+    steps = instructions.splitlines()
     template = loader.get_template('recipeApp/recipe_pdf.html')
-    html = template.render({'recipe': recipe})
+    html = template.render({'recipe': recipe, 'split_list': split_list, 'steps': steps})
     options = {
         'page-size': 'Letter',
         'encoding': 'UTF-8'

@@ -5,19 +5,29 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
     <title>Recipe</title>
 </head>
-<body>
-<h2>{{recipe.name}}</h2>
-<p>{{recipe.total_time}}</p>
-<p>{{ recipe.description }}</p>
+<body style="font-family: 'Roboto', sans-serif">
+<h1 class="display-5" style="font-weight:700">{{recipe.name}}</h1>
+<p>Total time: {{recipe.total_time}}</p>
+<h5 style="font-weight: 400">{{ recipe.description }}</h5>
 <hr>
-<h5>Ingredients</h5>
-<p>{{ recipe.ingredients }}</p>
-<h5>Instructions</h5>
-<p>{{ recipe.instructions }}</p>
+<h3>Ingredients</h3>
+    <ul>
+        {% for item in split_list %}
+         <li class="py-1">{{item}}</li>
+        {%endfor%}
+    </ul>
+<h3>Instructions</h3>
+  <ol>
+        {% for step in steps %}
+         <li class="py-1">{{step}}</li>
+        {%endfor%}
+    </ol>
     <hr>
-<h5>Notes</h5>
+<h4>Notes</h4>
 <p>{{ recipe.notes }}</p>
 </body>
 </html>
